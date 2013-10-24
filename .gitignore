@@ -1,0 +1,10 @@
+target/
+javadoc/
+bin/
+.classpath
+.project
+.settings/
+.DS_Store
+*.ser
+*.png
+ahah-samples/db/

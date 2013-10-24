@@ -1,0 +1,200 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<name>Ahah!</name>
+	<groupId>com.mancrd</groupId>
+	<artifactId>ahah-parent</artifactId>
+	<version>1.0.0</version>
+
+	<packaging>pom</packaging>
+	<description>The Ahah! project</description>
+	<url>http://www.xeiam.com</url>
+	<inceptionYear>2013</inceptionYear>
+
+	<organization>
+		<name>M. Alexander Nugent Consulting, Research and Devlopment</name>
+		<url>http://mancrd.com/</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>M. Alexander Nugent Consulting Research License Agreement</name>
+			<comments>Proprietary. See LICENSE.txt.</comments>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Tim Molter</name>
+		</developer>
+		<developer>
+			<name>Alex Nugent</name>
+		</developer>
+	</developers>
+
+	<modules>
+		<module>ahah-classifier</module>
+		<module>ahah-clusterer</module>
+		<module>ahah-combinatorial</module>
+		<module>ahah-commons</module>
+		<module>ahah-model</module>
+		<module>ahah-motorcontroller</module>
+		<module>ahah-samples</module>
+	</modules>
+
+	<repositories>
+		<repository>
+			<id>sonatype-oss-public</id>
+			<url>https://oss.sonatype.org/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.5</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.trove4j</groupId>
+				<artifactId>trove4j</artifactId>
+				<version>3.0.3</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xeiam.xchart</groupId>
+				<artifactId>xchart</artifactId>
+				<version>2.2.1</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xeiam</groupId>
+				<artifactId>proprioceptron</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xeiam</groupId>
+				<artifactId>yank</artifactId>
+				<version>2.1.0</version>
+			</dependency>        <!-- data sets -->
+			<dependency>
+				<groupId>com.xeiam.datasets</groupId>
+				<artifactId>datasets-breast-cancer-wisconsin-orginal</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xeiam.datasets</groupId>
+				<artifactId>datasets-census-income</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xeiam.datasets</groupId>
+				<artifactId>datasets-mnist</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>com.xeiam.datasets</groupId>
+				<artifactId>datasets-reuters-21578</artifactId>
+				<version>1.0.1-SNAPSHOT</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- test -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.12</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- for compiling -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<showDeprecation>true</showDeprecation>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+			<!-- Generates a source code JAR during package -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Generates a Javadoc JAR during package -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- for unit tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.15</version>
+				<configuration>
+					<forkMode>pertest</forkMode>
+					<argLine>-Xms256m -Xmx512m</argLine>
+					<testFailureIgnore>false</testFailureIgnore>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+			<!-- for header in all .java files -->
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.10.b1</version>
+				<configuration>
+					<header>etc/header.txt</header>
+					<aggregate>true</aggregate>
+					<includes>
+						<include>**/*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
+</project>
