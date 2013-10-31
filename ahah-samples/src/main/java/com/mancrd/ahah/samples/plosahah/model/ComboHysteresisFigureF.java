@@ -35,37 +35,43 @@ import com.xeiam.xchart.CSVImporter;
 import com.xeiam.xchart.CSVImporter.DataOrientation;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
-import com.xeiam.xchart.SeriesColor;
 import com.xeiam.xchart.SeriesLineStyle;
+import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.StyleManager.ChartTheme;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
  * @author timmolter
  */
-public class AgChalcPulsedFigure {
+public class ComboHysteresisFigureF {
 
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/AgChalcPulsed", DataOrientation.Columns, 300, 300, ChartTheme.Matlab);
-    chart.setYAxisTitle("Current [mA]");
-    chart.setXAxisTitle("Voltage [V]");
-    chart.getStyleManager().setLegendVisible(false);
+    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/Combo", DataOrientation.Columns, 240, 240, ChartTheme.Matlab);
+    chart.getStyleManager().setLegendVisible(true);
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
     chart.getStyleManager().setPlotGridLinesVisible(false);
+    chart.getStyleManager().setPlotTicksMarksVisible(false);
+    chart.getStyleManager().setAxisTicksVisible(false);
 
     Map<Integer, Series> seriesMap = chart.getSeriesMap();
 
-    // Series series0 = seriesMap.get(1);
-    // series0.setMarker(SeriesMarker.NONE);
-    // series0.setLineColor(ChartColor.getAWTColor(ChartColor.BLACK));
-    //
-    Series series1 = seriesMap.get(0);
-    series1.setLineStyle(SeriesLineStyle.NONE);
-    series1.setMarkerColor(SeriesColor.PINK);
+    Series series0 = seriesMap.get(0);
+    series0.setMarker(SeriesMarker.NONE);
+    // series0.setLineStyle(SeriesLineStyle.DASH_DASH);
+
+    Series series1 = seriesMap.get(1);
+    series1.setMarker(SeriesMarker.NONE);
+    series1.setLineStyle(SeriesLineStyle.DOT_DOT);
+
+    Series series2 = seriesMap.get(2);
+    series2.setMarker(SeriesMarker.NONE);
+    series2.setLineStyle(SeriesLineStyle.DASH_DASH);
 
     // Show it
     new SwingWrapper(chart).displayChart();
-    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/AgChalcHysteresis1.png", 300);
+    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/ComboHysteresis.png", 300);
   }
 }

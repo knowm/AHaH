@@ -33,19 +33,22 @@ import com.mancrd.ahah.model.circuit.mss.MSSMemristor;
 import com.xeiam.xchart.CSVExporter;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.StyleManager.ChartTheme;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Plots the current through the memristor as a function of voltage pulses applied.
+ * Plots the current through the memristor as a function of voltage applied for a sinusoidal voltage source.
  * 
  * @author timmolter
  */
-public class AgChalcogenidePulseTrainPlot {
+public class AgChalcogenideHysteresisPlotA {
 
   /**
    * This app takes the following arguments:
    * <ul>
+   * <li>frequency (100): frequency of voltage source
    * <li>timeStep (1E-4): time step of simulation
    * <li>amplitude (.25): amplitude of voltage source
    * <li>totalTime (5E-2): total simulation time.
@@ -54,89 +57,63 @@ public class AgChalcogenidePulseTrainPlot {
    */
   public static void main(String[] args) {
 
-    AgChalcogenidePulseTrainPlot agChalcogenideHysteresisPlot = new AgChalcogenidePulseTrainPlot();
+    AgChalcogenideHysteresisPlotA agChalcogenideHysteresisPlot = new AgChalcogenideHysteresisPlotA();
     agChalcogenideHysteresisPlot.go(args);
   }
 
   private void go(String[] args) {
 
-    double pulseWidth = 1E-5;
-    double amplitude = 1;
-    double totalTime = 1E-3;
+    double frequency = 100;
+    double timeStep = 1E-4;
+    double amplitude = .25;
+    double totalTime = 5E-2;
 
     try {
-      pulseWidth = Double.parseDouble(args[1]);
+      frequency = Double.parseDouble(args[0]);
+      timeStep = Double.parseDouble(args[1]);
       amplitude = Double.parseDouble(args[2]);
       totalTime = Double.parseDouble(args[3]);
     } catch (java.lang.ArrayIndexOutOfBoundsException e) {
       // just ignore
     }
 
-    MSSMemristor memristor = new AgChalcMemristor(0.5);
+    MSSMemristor memristor = new AgChalcMemristor(0);
 
-    int numTimeSteps = (int) (totalTime / pulseWidth);
+    int numTimeSteps = (int) (totalTime / timeStep);
 
     double[] current = new double[numTimeSteps];
     double[] voltage = new double[numTimeSteps];
-    double[] resistance = new double[numTimeSteps];
     double[] time = new double[numTimeSteps];
+    double[] resistance = new double[numTimeSteps];
 
-    final int numStepsBeforeSwitchingPolarity = 15;
-    int numSteps = 0;
-    boolean upPhase = true;
     for (int i = 0; i < numTimeSteps; i++) {
-
-      time[i] = i;
-      voltage[i] = getPolarity(upPhase) * amplitude;
+      time[i] = (i + 1) * timeStep;
+      voltage[i] = amplitude * Math.sin(time[i] * 2 * Math.PI * frequency);
       current[i] = memristor.getCurrent(voltage[i]) * 1000; // in mA
-      if (current[i] != 0) {
-        resistance[i] = voltage[i] / current[i] * 1000; // in Ohm
-      }
-      else {
-        resistance[i] = 0;
-      }
-
-      // update memristor
-      memristor.dG(voltage[i], pulseWidth);
-
-      if (numSteps++ == numStepsBeforeSwitchingPolarity) {
-        upPhase = !upPhase;
-        numSteps = 0;
-      }
+      memristor.dG(voltage[i], timeStep);
+      resistance[i] = voltage[i] / current[i] * 1000; // in Ohm
     }
 
-    // Create IChart
+    // Create Chart
     Chart chart = new Chart(600, 600, ChartTheme.Matlab);
-    chart.setChartTitle("Pulse Train " + pulseWidth + " s, " + amplitude + " V");
+    chart.setChartTitle("Hysteresis Loop " + frequency + " Hz");
     chart.setYAxisTitle("Current [mA]");
-    chart.setXAxisTitle("Pulse Number");
-    chart.getStyleManager().setLegendVisible(false);
-    Series series = chart.addSeries("AgChalcPulseI", time, current);
-    // series.setMarker(SeriesMarker.NONE);
+    chart.setXAxisTitle("Voltage [V]");
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
+    Series series = chart.addSeries(((int) frequency + " Hz"), voltage, current);
+    series.setMarker(SeriesMarker.NONE);
     new SwingWrapper(chart).displayChart();
-    CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/");
+    CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/AgChalcA/");
 
-    // resistance plot
-    chart = new Chart(600, 600, ChartTheme.Matlab);
-    chart.setChartTitle("Pulse Train " + pulseWidth + " s");
-    chart.setYAxisTitle("Resistance [Ohm]");
-    chart.setXAxisTitle("Pulse Number");
-    chart.getStyleManager().setLegendVisible(false);
-    series = chart.addSeries("AgChalcPulseR", time, resistance);
-    // series.setMarker(SeriesMarker.NONE);
-    new SwingWrapper(chart).displayChart();
-    CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/AgChalc3/");
-
-  }
-
-  private double getPolarity(boolean upPhase) {
-
-    if (upPhase) {
-      return -2.0;
-    }
-    else {
-      return .8;
-    }
-
+    // // Create R/V Chart
+    // chart = new Chart(600, 600, ChartTheme.Matlab);
+    // chart.setChartTitle("Resistance Loop " + frequency + " Hz");
+    // chart.setYAxisTitle("Resistance [Ohm]");
+    // chart.setXAxisTitle("Voltage [V]");
+    // chart.getStyleManager().setLegendVisible(false);
+    // series = chart.addSeries("AgChalcModelRV", voltage, resistance);
+    // // series.setMarker(SeriesMarker.NONE);
+    // new SwingWrapper(chart).displayChart();
+    // CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/");
   }
 }

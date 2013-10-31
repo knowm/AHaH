@@ -37,20 +37,21 @@ import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SeriesLineStyle;
 import com.xeiam.xchart.StyleManager.ChartTheme;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
  * @author timmolter
  */
-public class AgChalcHysteresisFigureC {
+public class AgChalcPulseFigureC {
 
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/AgChalc3", DataOrientation.Columns, 300, 300, ChartTheme.Matlab);
+    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/AgChalcC", DataOrientation.Columns, 300, 270, ChartTheme.Matlab);
     chart.setYAxisTitle("Resistance [Ohm]");
     chart.setXAxisTitle("Pulse Number");
-    chart.getStyleManager().setLegendVisible(false);
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNE);
     chart.getStyleManager().setPlotGridLinesVisible(false);
 
     Map<Integer, Series> seriesMap = chart.getSeriesMap();
@@ -58,8 +59,14 @@ public class AgChalcHysteresisFigureC {
     Series series0 = seriesMap.get(0);
     series0.setLineStyle(SeriesLineStyle.NONE);
 
+    Series series1 = seriesMap.get(1);
+    series1.setLineStyle(SeriesLineStyle.NONE);
+
+    Series series2 = seriesMap.get(2);
+    series2.setLineStyle(SeriesLineStyle.NONE);
+
     // Show it
     new SwingWrapper(chart).displayChart();
-    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/AgChalcHysteresis3.png", 300);
+    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/AgChalcHysteresisC.png", 300);
   }
 }

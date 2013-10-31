@@ -49,7 +49,7 @@ public class AgChalcHysteresisFigureB {
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/AgChalc2", DataOrientation.Columns, 300, 300, ChartTheme.Matlab);
+    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/AgChalcB", DataOrientation.Columns, 300, 270, ChartTheme.Matlab);
     chart.setYAxisTitle("Current [mA]");
     chart.setXAxisTitle("Voltage [V]");
     chart.getStyleManager().setLegendVisible(true);
@@ -71,6 +71,6 @@ public class AgChalcHysteresisFigureB {
 
     // Show it
     new SwingWrapper(chart).displayChart();
-    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/AgChalcHysteresis2.png", 300);
+    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/AgChalcHysteresisB.png", 300);
   }
 }

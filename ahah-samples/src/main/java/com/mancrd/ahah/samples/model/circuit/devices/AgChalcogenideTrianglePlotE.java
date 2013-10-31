@@ -28,6 +28,8 @@
  */
 package com.mancrd.ahah.samples.model.circuit.devices;
 
+import com.mancrd.ahah.model.circuit.driver.Driver;
+import com.mancrd.ahah.model.circuit.driver.Triangle;
 import com.mancrd.ahah.model.circuit.mss.AgChalcMemristor;
 import com.mancrd.ahah.model.circuit.mss.MSSMemristor;
 import com.xeiam.xchart.CSVExporter;
@@ -43,41 +45,38 @@ import com.xeiam.xchart.SwingWrapper;
  * 
  * @author timmolter
  */
-public class AgChalcogenideHysteresisPlot {
+public class AgChalcogenideTrianglePlotE {
 
   /**
-   * This app takes the following arguments:
-   * <ul>
-   * <li>frequency (100): frequency of voltage source
-   * <li>timeStep (1E-4): time step of simulation
-   * <li>amplitude (.25): amplitude of voltage source
-   * <li>totalTime (5E-2): total simulation time.
-   * 
    * @param args
    */
   public static void main(String[] args) {
 
-    AgChalcogenideHysteresisPlot agChalcogenideHysteresisPlot = new AgChalcogenideHysteresisPlot();
+    AgChalcogenideTrianglePlotE agChalcogenideHysteresisPlot = new AgChalcogenideTrianglePlotE();
     agChalcogenideHysteresisPlot.go(args);
   }
 
   private void go(String[] args) {
 
+    // double frequency = 100;
+    // double timeStep = 1E-4;
+    // double amplitude = .05;
+    // double offset = .05;
+    // double phase = 0.0075;
+    // double totalTime = 5E-2;
+    // double initialMemristance = 1;
+    // String title = "100 Hz positive";
+
     double frequency = 100;
     double timeStep = 1E-4;
-    double amplitude = .25;
+    double amplitude = .05;
+    double offset = -.05;
+    double phase = 0.0025;
     double totalTime = 5E-2;
+    double initialMemristance = 0;
+    String title = "100 Hz negative";
 
-    try {
-      frequency = Double.parseDouble(args[0]);
-      timeStep = Double.parseDouble(args[1]);
-      amplitude = Double.parseDouble(args[2]);
-      totalTime = Double.parseDouble(args[3]);
-    } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-      // just ignore
-    }
-
-    MSSMemristor memristor = new AgChalcMemristor(0);
+    MSSMemristor memristor = new AgChalcMemristor(initialMemristance);
 
     int numTimeSteps = (int) (totalTime / timeStep);
 
@@ -86,9 +85,13 @@ public class AgChalcogenideHysteresisPlot {
     double[] time = new double[numTimeSteps];
     double[] resistance = new double[numTimeSteps];
 
+    Driver driver = new Triangle("V", offset, phase, amplitude, frequency);
+
     for (int i = 0; i < numTimeSteps; i++) {
       time[i] = (i + 1) * timeStep;
-      voltage[i] = amplitude * Math.sin(time[i] * 2 * Math.PI * frequency);
+      // voltage[i] = amplitude * Math.sin(time[i] * 2 * Math.PI * frequency);
+      voltage[i] = driver.getSignal(time[i]);
+      System.out.println(voltage[i]);
       current[i] = memristor.getCurrent(voltage[i]) * 1000; // in mA
       memristor.dG(voltage[i], timeStep);
       resistance[i] = voltage[i] / current[i] * 1000; // in Ohm
@@ -100,20 +103,10 @@ public class AgChalcogenideHysteresisPlot {
     chart.setYAxisTitle("Current [mA]");
     chart.setXAxisTitle("Voltage [V]");
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
-    Series series = chart.addSeries("AgChalcModel", voltage, current);
+    Series series = chart.addSeries(title, voltage, current);
     series.setMarker(SeriesMarker.NONE);
     new SwingWrapper(chart).displayChart();
-    CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/AgChalc1/");
+    CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/AgChalcE/");
 
-    // // Create R/V Chart
-    // chart = new Chart(600, 600, ChartTheme.Matlab);
-    // chart.setChartTitle("Resistance Loop " + frequency + " Hz");
-    // chart.setYAxisTitle("Resistance [Ohm]");
-    // chart.setXAxisTitle("Voltage [V]");
-    // chart.getStyleManager().setLegendVisible(false);
-    // series = chart.addSeries("AgChalcModelRV", voltage, resistance);
-    // // series.setMarker(SeriesMarker.NONE);
-    // new SwingWrapper(chart).displayChart();
-    // CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/");
   }
 }

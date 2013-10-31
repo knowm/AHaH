@@ -35,6 +35,7 @@ import com.xeiam.xchart.CSVImporter;
 import com.xeiam.xchart.CSVImporter.DataOrientation;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
+import com.xeiam.xchart.SeriesColor;
 import com.xeiam.xchart.SeriesLineStyle;
 import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.StyleManager.ChartTheme;
@@ -44,34 +45,30 @@ import com.xeiam.xchart.SwingWrapper;
 /**
  * @author timmolter
  */
-public class ComboHysteresisFigureD {
+public class AgChalcHysteresisFigureE {
 
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/Combo", DataOrientation.Columns, 280, 280, ChartTheme.Matlab);
-    chart.getStyleManager().setLegendVisible(true);
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
+    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/AgChalcE", DataOrientation.Columns, 300, 270, ChartTheme.Matlab);
+    chart.setYAxisTitle("Current [mA]");
+    chart.setXAxisTitle("Voltage [V]");
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyleManager().setPlotGridLinesVisible(false);
-    chart.getStyleManager().setPlotTicksMarksVisible(false);
-    chart.getStyleManager().setAxisTicksVisible(false);
 
     Map<Integer, Series> seriesMap = chart.getSeriesMap();
 
-    Series series0 = seriesMap.get(0);
-    series0.setMarker(SeriesMarker.NONE);
-    // series0.setLineStyle(SeriesLineStyle.DASH_DASH);
-
-    Series series1 = seriesMap.get(1);
+    Series series1 = seriesMap.get(0);
     series1.setMarker(SeriesMarker.NONE);
-    series1.setLineStyle(SeriesLineStyle.DOT_DOT);
+    series1.setLineColor(SeriesColor.BLUE);
 
-    Series series2 = seriesMap.get(2);
+    Series series2 = seriesMap.get(1);
     series2.setMarker(SeriesMarker.NONE);
-    series2.setLineStyle(SeriesLineStyle.DASH_DASH);
+    series2.setLineStyle(SeriesLineStyle.DOT_DOT);
+    series2.setLineColor(SeriesColor.ORANGE);
 
     // Show it
     new SwingWrapper(chart).displayChart();
-    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/ComboHysteresis.png", 300);
+    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/AgChalcTriangleE.png", 300);
   }
 }

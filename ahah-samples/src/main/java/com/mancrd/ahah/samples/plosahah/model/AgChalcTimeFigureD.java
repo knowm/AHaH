@@ -35,7 +35,6 @@ import com.xeiam.xchart.CSVImporter;
 import com.xeiam.xchart.CSVImporter.DataOrientation;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
-import com.xeiam.xchart.SeriesColor;
 import com.xeiam.xchart.SeriesLineStyle;
 import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.StyleManager.ChartTheme;
@@ -45,50 +44,33 @@ import com.xeiam.xchart.SwingWrapper;
 /**
  * @author timmolter
  */
-public class AgChalcHysteresisFigureA {
+public class AgChalcTimeFigureD {
 
   public static void main(String[] args) throws Exception {
 
     // import chart from a folder containing CSV files
-    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/AgChalcA", DataOrientation.Columns, 300, 270, ChartTheme.Matlab);
+    Chart chart = CSVImporter.getChartFromCSVDir("./Results/Model/Circuit/AgChalcD", DataOrientation.Columns, 300, 270, ChartTheme.Matlab);
     chart.setYAxisTitle("Current [mA]");
-    chart.setXAxisTitle("Voltage [V]");
-    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
+    chart.setXAxisTitle("Time [s]");
+    // chart.getStyleManager().setLegendVisible(false);
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideNE);
     chart.getStyleManager().setPlotGridLinesVisible(false);
 
     Map<Integer, Series> seriesMap = chart.getSeriesMap();
 
     Series series0 = seriesMap.get(0);
+    series0.setMarker(SeriesMarker.NONE);
+
     Series series1 = seriesMap.get(1);
-    Series series2 = seriesMap.get(2);
-    Series series3 = seriesMap.get(3);
-
-    seriesMap.put(0, series3);
-    seriesMap.put(1, series0);
-    seriesMap.put(2, series1);
-    seriesMap.put(3, series2);
-
-    series0 = seriesMap.get(0);
-    series0.setLineStyle(SeriesLineStyle.NONE);
-    series0.setMarker(SeriesMarker.CIRCLE);
-    series0.setMarkerColor(SeriesColor.PINK);
-
-    series1 = seriesMap.get(1);
     series1.setMarker(SeriesMarker.NONE);
-    series1.setLineColor(SeriesColor.BLUE);
+    series1.setLineStyle(SeriesLineStyle.DOT_DOT);
 
-    series2 = seriesMap.get(2);
+    Series series2 = seriesMap.get(2);
     series2.setMarker(SeriesMarker.NONE);
-    series2.setLineStyle(SeriesLineStyle.DOT_DOT);
-    series2.setLineColor(SeriesColor.ORANGE);
-
-    series3 = seriesMap.get(3);
-    series3.setMarker(SeriesMarker.NONE);
-    series3.setLineStyle(SeriesLineStyle.DASH_DASH);
-    series3.setLineColor(SeriesColor.PURPLE);
+    series2.setLineStyle(SeriesLineStyle.DASH_DASH);
 
     // Show it
     new SwingWrapper(chart).displayChart();
-    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/AgChalcHysteresisA.png", 300);
+    BitmapEncoder.savePNGWithDPI(chart, "./PLOS_AHAH/Figures/AgChalcTimeD.png", 300);
   }
 }

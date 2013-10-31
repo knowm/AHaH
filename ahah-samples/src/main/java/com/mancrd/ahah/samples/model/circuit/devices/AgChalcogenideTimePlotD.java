@@ -29,21 +29,21 @@
 package com.mancrd.ahah.samples.model.circuit.devices;
 
 import com.mancrd.ahah.model.circuit.mss.AgChalcMemristor;
-import com.mancrd.ahah.model.circuit.mss.AgChalcMemristor2;
 import com.mancrd.ahah.model.circuit.mss.MSSMemristor;
 import com.xeiam.xchart.CSVExporter;
 import com.xeiam.xchart.Chart;
 import com.xeiam.xchart.Series;
 import com.xeiam.xchart.SeriesMarker;
 import com.xeiam.xchart.StyleManager.ChartTheme;
+import com.xeiam.xchart.StyleManager.LegendPosition;
 import com.xeiam.xchart.SwingWrapper;
 
 /**
- * Plots the current through two series-connected memristors as a function of voltage applied for a sinusoidal voltage source.
+ * Plots the current through the memristor as a function of voltage applied for a sinusoidal voltage source.
  * 
  * @author timmolter
  */
-public class AgChalcogenideHysteresisPlot2 {
+public class AgChalcogenideTimePlotD {
 
   /**
    * This app takes the following arguments:
@@ -57,16 +57,16 @@ public class AgChalcogenideHysteresisPlot2 {
    */
   public static void main(String[] args) {
 
-    AgChalcogenideHysteresisPlot2 agChalcogenideHysteresisPlot = new AgChalcogenideHysteresisPlot2();
+    AgChalcogenideTimePlotD agChalcogenideHysteresisPlot = new AgChalcogenideTimePlotD();
     agChalcogenideHysteresisPlot.go(args);
   }
 
   private void go(String[] args) {
 
-    double frequency = 100;
+    double frequency = 150;
     double timeStep = 1E-4;
-    double amplitude = .37;
-    double totalTime = 1E-2;
+    double amplitude = .25;
+    double totalTime = 2E-2;
 
     try {
       frequency = Double.parseDouble(args[0]);
@@ -77,47 +77,43 @@ public class AgChalcogenideHysteresisPlot2 {
       // just ignore
     }
 
-    MSSMemristor m1 = new AgChalcMemristor(.5);
-    MSSMemristor m2 = new AgChalcMemristor2(.5);
+    MSSMemristor memristor = new AgChalcMemristor(0);
 
     int numTimeSteps = (int) (totalTime / timeStep);
 
     double[] current = new double[numTimeSteps];
     double[] voltage = new double[numTimeSteps];
-    double[] v1 = new double[numTimeSteps];
-    double[] v2 = new double[numTimeSteps];
-    double[] resistance = new double[numTimeSteps];
     double[] time = new double[numTimeSteps];
+    double[] resistance = new double[numTimeSteps];
 
     for (int i = 0; i < numTimeSteps; i++) {
-
       time[i] = (i + 1) * timeStep;
       voltage[i] = amplitude * Math.sin(time[i] * 2 * Math.PI * frequency);
-      current[i] = voltage[i] / (m1.getResistance() + m2.getResistance()) * 1000; // in mA
-
-      v2[i] = current[i] / m2.getConductance() / 1000;
-      v1[i] = voltage[i] - v2[i];
+      current[i] = memristor.getCurrent(voltage[i]) * 1000; // in mA
+      memristor.dG(voltage[i], timeStep);
       resistance[i] = voltage[i] / current[i] * 1000; // in Ohm
-      m1.dG(v1[i], timeStep);
-      m2.dG(v2[i], timeStep);
     }
 
-    // Create I/V Chart
+    // Create Chart
     Chart chart = new Chart(600, 600, ChartTheme.Matlab);
     chart.setChartTitle("Hysteresis Loop " + frequency + " Hz");
     chart.setYAxisTitle("Current [mA]");
-    chart.setXAxisTitle("Voltage [V]");
-    // chart.getStyleManager().setLegendVisible(false);
-    Series series1 = chart.addSeries("V", voltage, current);
-    series1.setMarker(SeriesMarker.NONE);
-    Series series2 = chart.addSeries("Va", v1, current);
-    series2.setMarker(SeriesMarker.NONE);
-    Series series3 = chart.addSeries("Vb", v2, current);
-    series3.setMarker(SeriesMarker.NONE);
+    chart.setXAxisTitle("Time [s]");
+    chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
+    Series series = chart.addSeries(((int) frequency + " Hz"), time, current);
+    series.setMarker(SeriesMarker.NONE);
     new SwingWrapper(chart).displayChart();
-    CSVExporter.writeCSVColumns(series1, "./Results/Model/Circuit/AgChalc2/");
-    CSVExporter.writeCSVColumns(series2, "./Results/Model/Circuit/AgChalc2/");
-    CSVExporter.writeCSVColumns(series3, "./Results/Model/Circuit/AgChalc2/");
+    CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/AgChalcD/");
 
+    // // Create R/V Chart
+    // chart = new Chart(600, 600, ChartTheme.Matlab);
+    // chart.setChartTitle("Resistance Loop " + frequency + " Hz");
+    // chart.setYAxisTitle("Resistance [Ohm]");
+    // chart.setXAxisTitle("Voltage [V]");
+    // chart.getStyleManager().setLegendVisible(false);
+    // series = chart.addSeries("AgChalcModelRV", voltage, resistance);
+    // // series.setMarker(SeriesMarker.NONE);
+    // new SwingWrapper(chart).displayChart();
+    // CSVExporter.writeCSVColumns(series, "./Results/Model/Circuit/");
   }
 }

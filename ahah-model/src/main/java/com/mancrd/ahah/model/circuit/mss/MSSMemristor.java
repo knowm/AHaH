@@ -128,13 +128,13 @@ public abstract class MSSMemristor {
   /**
    * update device
    * 
-   * @param v
+   * @param voltage
    * @param dt
    */
-  public void dG(double v, double dt) {
+  public void dG(double voltage, double dt) {
 
-    double Pa = Pa(v, dt);
-    double Pb = Pb(v, dt);
+    double Pa = Pa(voltage, dt);
+    double Pb = Pb(voltage, dt);
 
     double u_a = (n - Nb) * Pa;
     double u_b = (Nb) * Pb;
@@ -159,13 +159,13 @@ public abstract class MSSMemristor {
   /**
    * the probability that the MSS will transition from the A state to the B state
    * 
-   * @param v - the voltage across the device
+   * @param voltage - the voltage across the device
    * @param dt
    * @return
    */
-  private double Pa(final double v, final double dt) {
+  private double Pa(final double voltage, final double dt) {
 
-    double exponent = -1 * (v - vA) / VT;
+    double exponent = -1 * (voltage - vA) / VT;
     double alpha = getAlpha(dt);
     double Pa = alpha / (1.0 + Math.exp(exponent));
 
