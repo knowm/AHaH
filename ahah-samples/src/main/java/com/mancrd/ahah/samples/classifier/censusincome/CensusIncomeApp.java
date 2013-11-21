@@ -73,7 +73,7 @@ public class CensusIncomeApp {
 
   private void go(String[] args) throws IOException {
 
-    int numTrainingEpochs = 5;
+    int numTrainingEpochs = 1;
     try {
       numTrainingEpochs = Integer.parseInt(args[0]);
     } catch (java.lang.ArrayIndexOutOfBoundsException e) {

@@ -181,7 +181,7 @@ public class ComplexSignalPredictionApp {
 
         signalData[i] = signalNow;
         signalPredictionData[i] = reconstruct(classifierOutput, reconstructionConfidenceTreshold);
-        System.out.println("Spike Pattern Length = " + spikes.length);
+        // System.out.println("Spike Pattern Length = " + spikes.length);
       }
       else { // recursive prediction. feed output back as input.
 

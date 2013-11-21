@@ -53,7 +53,7 @@ public class ClusteringApp {
    */
   public static void main(String[] args) {
 
-    int sampleNumber = 8;
+    int sampleNumber = 0;
     try {
       sampleNumber = Integer.parseInt(args[0]);
     } catch (java.lang.ArrayIndexOutOfBoundsException e) {
