@@ -30,6 +30,8 @@ package com.mancrd.ahah.samples.classifier.mnist;
 
 import gnu.trove.set.hash.TLongHashSet;
 
+import java.io.File;
+
 import javax.swing.JPanel;
 
 import com.mancrd.ahah.commons.spikes.AhahTree;
@@ -52,8 +54,10 @@ public class MnistAhahTreeFeaturePatchApp {
    */
   public static void main(String[] args) {
 
+    File tempDBFile = MnistDAO.init(); // setup data
     MnistAhahTreeFeaturePatchApp ahahTreeMnist = new MnistAhahTreeFeaturePatchApp();
     ahahTreeMnist.go(args);
+    MnistDAO.release(tempDBFile); // release data resources
 
   }
 
