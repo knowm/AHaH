@@ -67,7 +67,7 @@ tweak and experiment with. The default argument values are in parentheses.
 Please email M. Alexander Nugent Consulting at i@alexnugent.name for any questions or licensing inquiries.
 
 ## More Info
-Project Site: http://xeiam.com/ahah.jsp  
+Project Site: http://xeiam.com/ahah  
 Example Code: http://xeiam.com/ahah_examplecode.jsp  
 Change Log: http://xeiam.com/ahah_changelog.jsp  
 Java Docs: http://xeiam.com/ahah/javadoc/index.html  
