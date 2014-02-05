@@ -54,15 +54,15 @@ public class AgChalcPulseFigureC {
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNE);
     chart.getStyleManager().setPlotGridLinesVisible(false);
 
-    Map<Integer, Series> seriesMap = chart.getSeriesMap();
+    Map<String, Series> seriesMap = chart.getSeriesMap();
 
-    Series series0 = seriesMap.get(0);
+    Series series0 = seriesMap.get("10 µs, 0.2 V, -0.5 V");
     series0.setLineStyle(SeriesLineStyle.NONE);
 
-    Series series1 = seriesMap.get(1);
+    Series series1 = seriesMap.get("10 µs, 0.8 V, -2.0 V");
     series1.setLineStyle(SeriesLineStyle.NONE);
 
-    Series series2 = seriesMap.get(2);
+    Series series2 = seriesMap.get("5 µs, 0.8 V, -2.0 V");
     series2.setLineStyle(SeriesLineStyle.NONE);
 
     // Show it

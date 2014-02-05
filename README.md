@@ -58,7 +58,7 @@ AHaH! is built with Maven.
 ## Running the Software
 
 All the sample applications that are part of the AHaH! project can be run from the command line, and a Java JRE 
-version 6 or higher is needed. For each sample app, a description, tips for running the app, and the arguement list
+version 6 or higher is needed. For each sample app, a description, tips for running the app, and the argument list
 is given in the corresponding source code. Each app is configured to take a list of parameters which you can use to 
 tweak and experiment with. The default argument values are in parentheses. 
 

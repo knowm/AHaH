@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2013 M. Alexander Nugent Consulting <i@alexnugent.name>
+q * Copyright (c) 2013 M. Alexander Nugent Consulting <i@alexnugent.name>
  *
  * M. Alexander Nugent Consulting Research License Agreement
  * Non-Commercial Academic Use Only
@@ -56,33 +56,28 @@ public class AgChalcHysteresisFigureA {
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyleManager().setPlotGridLinesVisible(false);
 
-    Map<Integer, Series> seriesMap = chart.getSeriesMap();
+    Map<String, Series> seriesMap = chart.getSeriesMap();
 
-    Series series0 = seriesMap.get(0);
-    Series series1 = seriesMap.get(1);
-    Series series2 = seriesMap.get(2);
-    Series series3 = seriesMap.get(3);
+    Series series0 = seriesMap.get("Device");
+    Series series1 = seriesMap.get("100 Hz");
+    Series series2 = seriesMap.get("1000 Hz");
+    Series series3 = seriesMap.get("10000 Hz");
 
-    seriesMap.put(0, series3);
-    seriesMap.put(1, series0);
-    seriesMap.put(2, series1);
-    seriesMap.put(3, series2);
-
-    series0 = seriesMap.get(0);
+    // series0 = seriesMap.get(0);
     series0.setLineStyle(SeriesLineStyle.NONE);
     series0.setMarker(SeriesMarker.CIRCLE);
     series0.setMarkerColor(SeriesColor.PINK);
 
-    series1 = seriesMap.get(1);
+    // series1 = seriesMap.get(1);
     series1.setMarker(SeriesMarker.NONE);
     series1.setLineColor(SeriesColor.BLUE);
 
-    series2 = seriesMap.get(2);
+    // series2 = seriesMap.get(2);
     series2.setMarker(SeriesMarker.NONE);
     series2.setLineStyle(SeriesLineStyle.DOT_DOT);
     series2.setLineColor(SeriesColor.ORANGE);
 
-    series3 = seriesMap.get(3);
+    // series3 = seriesMap.get(3);
     series3.setMarker(SeriesMarker.NONE);
     series3.setLineStyle(SeriesLineStyle.DASH_DASH);
     series3.setLineColor(SeriesColor.PURPLE);

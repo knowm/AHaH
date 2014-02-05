@@ -56,16 +56,16 @@ public class AgChalcHysteresisFigureB {
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideSE);
     chart.getStyleManager().setPlotGridLinesVisible(false);
 
-    Map<Integer, Series> seriesMap = chart.getSeriesMap();
+    Map<String, Series> seriesMap = chart.getSeriesMap();
 
-    Series series0 = seriesMap.get(0);
+    Series series0 = seriesMap.get("V");
     series0.setMarker(SeriesMarker.NONE);
 
-    Series series1 = seriesMap.get(1);
+    Series series1 = seriesMap.get("Va");
     series1.setMarker(SeriesMarker.NONE);
     series1.setLineStyle(SeriesLineStyle.DOT_DOT);
 
-    Series series2 = seriesMap.get(2);
+    Series series2 = seriesMap.get("Vb");
     series2.setMarker(SeriesMarker.NONE);
     series2.setLineStyle(SeriesLineStyle.DASH_DASH);
 

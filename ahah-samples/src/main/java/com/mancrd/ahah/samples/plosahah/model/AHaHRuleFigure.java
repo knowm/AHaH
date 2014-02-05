@@ -70,14 +70,14 @@ public class AHaHRuleFigure {
     chart.getStyleManager().setPlotGridLinesVisible(false);
     chart.getStyleManager().setAxisTicksVisible(false);
 
-    Map<Integer, Series> seriesMap = chart.getSeriesMap();
+    Map<String, Series> seriesMap = chart.getSeriesMap();
 
-    Series circuitBias = seriesMap.get(0);
+    Series circuitBias = seriesMap.get("Functional_Bias");
     circuitBias.setLineStyle(SeriesLineStyle.NONE);
     circuitBias.setMarker(SeriesMarker.CIRCLE);
     circuitBias.setMarkerColor(new Color(255, 0, 0, 10));
 
-    Series circuitInputs = seriesMap.get(1);
+    Series circuitInputs = seriesMap.get("Functional_Inputs");
     circuitInputs.setLineStyle(SeriesLineStyle.NONE);
     circuitInputs.setMarker(SeriesMarker.CIRCLE);
     circuitInputs.setMarkerColor(new Color(0, 0, 255, 10));

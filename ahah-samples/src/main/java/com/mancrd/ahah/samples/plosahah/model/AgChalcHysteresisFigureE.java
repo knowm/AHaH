@@ -56,13 +56,13 @@ public class AgChalcHysteresisFigureE {
     chart.getStyleManager().setLegendPosition(LegendPosition.InsideNW);
     chart.getStyleManager().setPlotGridLinesVisible(false);
 
-    Map<Integer, Series> seriesMap = chart.getSeriesMap();
+    Map<String, Series> seriesMap = chart.getSeriesMap();
 
-    Series series1 = seriesMap.get(0);
+    Series series1 = seriesMap.get("100 Hz negative");
     series1.setMarker(SeriesMarker.NONE);
     series1.setLineColor(SeriesColor.BLUE);
 
-    Series series2 = seriesMap.get(1);
+    Series series2 = seriesMap.get("100 Hz positive");
     series2.setMarker(SeriesMarker.NONE);
     series2.setLineStyle(SeriesLineStyle.DOT_DOT);
     series2.setLineColor(SeriesColor.ORANGE);
