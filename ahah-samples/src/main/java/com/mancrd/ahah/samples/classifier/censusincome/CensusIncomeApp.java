@@ -58,7 +58,7 @@ public class CensusIncomeApp {
   /**
    * This app takes the following arguments:
    * <ul>
-   * <li>int numTrainingEpochs (5): number of training epochs to use</li>
+   * <li>int numTrainingEpochs (1): number of training epochs to use</li>
    * 
    * @param args
    * @throws IOException
