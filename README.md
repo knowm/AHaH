@@ -69,7 +69,7 @@ tweak and experiment with. The default argument values are in parentheses.
 Please email M. Alexander Nugent Consulting at i@alexnugent.name for any questions or licensing inquiries.
 
 ## More Info
-Project Site: <http://knowm.org/open-source/ahah/> 
-Example Code: <http://knowm.org/open-source/ahah/ahah-example-code> 
-Change Log: <http://knowm.org/open-source/ahah/ahah-change-log>
-Java Docs: <http://knowm.org/javadocs/ahah/index.html>
+Project Site: <http://knowm.org/open-source/ahah/>  
+Example Code: <http://knowm.org/open-source/ahah/ahah-example-code>  
+Change Log: <http://knowm.org/open-source/ahah/ahah-change-log>  
+Java Docs: <http://knowm.org/javadocs/ahah/index.html>  
