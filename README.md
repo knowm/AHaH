@@ -20,6 +20,8 @@ healing have also been demonstrated. The AHaH node is a "building block" from wh
 machine learning capabilities are now emerging. Currently the AHaH! project has specific modules targeting 
 the following areas of machine learning:
 
+1. Metastable Switch Memristor Model
+1. Functional and Circuit-based AHaH Node Models
 1. Supervised and Unsupervised Classification
 1. Unsupervised Feature Extraction and Clustering
 1. Unsupervised Robotic Actuation
@@ -67,7 +69,7 @@ tweak and experiment with. The default argument values are in parentheses.
 Please email M. Alexander Nugent Consulting at i@alexnugent.name for any questions or licensing inquiries.
 
 ## More Info
-Project Site: http://xeiam.com/ahah  
-Example Code: http://xeiam.com/ahah_examplecode.jsp  
-Change Log: http://xeiam.com/ahah_changelog.jsp  
-Java Docs: http://xeiam.com/ahah/javadoc/index.html  
+Project Site: <http://knowm.org/open-source/ahah/> 
+Example Code: <http://knowm.org/open-source/ahah/ahah-example-code> 
+Change Log: <http://knowm.org/open-source/ahah/ahah-change-log>
+Java Docs: <http://knowm.org/javadocs/ahah/index.html>
