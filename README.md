@@ -1,6 +1,6 @@
 ## AHaH!
 
-A machine learning framework based on Anti-Hebbian and Hebbian (AHaH) neural plasticity.
+A machine learning framework based on Anti-Hebbian and Hebbian (AHaH) neural plasticity. This project is an archive of code referenced from our 2014 paper: [AHaH Computing–From Metastable Switches to Attractors to Machine Learning](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0085175).
 
 ## Description 
 
