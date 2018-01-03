@@ -90,12 +90,12 @@ public class DifferentialWeightApp extends CircuitModelExperiment {
         w_conjugate.add(ahahNode.getSpikeInputWeightMagnitudeSum(spikePattern));
       }
 
-      Series w_series = chart.addSeries("sum(wa - wb)", null, w);
+      Series w_series = chart.addSeries("sum(wa - wb)_"+i, null, w);
       w_series.setLineStyle(SeriesLineStyle.SOLID);
       w_series.setMarker(SeriesMarker.NONE);
       w_series.setLineColor(new Color(255, 0, 0, 50));
 
-      Series wc_series = chart.addSeries("sum(wa + wb)", null, w_conjugate);
+      Series wc_series = chart.addSeries("sum(wa + wb)_"+i, null, w_conjugate);
       wc_series.setLineStyle(SeriesLineStyle.SOLID);
       wc_series.setMarker(SeriesMarker.NONE);
       wc_series.setLineColor(new Color(0, 0, 255, 50));

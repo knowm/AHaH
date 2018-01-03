@@ -8,3 +8,4 @@ bin/
 *.ser
 *.png
 ahah-samples/db/
+*.iml
